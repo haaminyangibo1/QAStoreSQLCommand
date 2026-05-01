@@ -1,0 +1,52 @@
+import java.util.*;
+import java.util.stream.*;
+
+public class StreamDemo {
+
+    public static void main(String[] args) {
+
+        List<String> names = Arrays.asList("Charlie", "Alice", "Eve", "Bob", "Dave");
+
+        //Stage 1- Sorting the old way
+        Collections.sort(names);
+        System.out.println("Alphabetical: " + names);
+
+        //Stage 2 - Sort by length using lambda
+        names.sort((a,b) -> a.length() - b.length());
+        System.out.println("By length: " + names);
+
+
+        //Stage 3 - forEach
+        System.out.print("Each name:  ");
+        names.forEach(name -> System.out.println(name +" "));
+        System.out.println();
+
+        //Stage 4 - Filter names longer than 3 characters
+        List<String> longNames = names.stream().filter(name -> name.length() > 3).collect(Collectors.toList());
+        System.out.println("Longer than 3 Characters:" + longNames);
+
+        //Stage 5 - Streams - Map
+        List<String> upper = names.stream().map(name -> name.toUpperCase()).collect(Collectors.toList());
+
+        //Stage 6 - Chaining filter map and sort
+        List<String> result = names.stream().filter( name -> name.length() > 3).map(name -> name.toUpperCase()).sorted().collect(Collectors.toList());
+        System.out.println("Chained:  " + result);
+
+        //Stage 7 - Working with numbers
+
+        List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+
+        List<Integer> evenSqaures = numbers.stream().map( n -> n*n).filter( n -> n % 2 ==0 ).collect(Collectors.toList());
+        System.out.println("Even Squares:  " + evenSqaures);
+
+
+        //Stage 8 - Reduce
+
+        int sum = numbers.stream().reduce(0, (a,b) -> a +b);
+        System.out.println("Sum of numbers: " + sum);
+
+        //Stage 9 - Count adn Summarise
+        long count = names.stream().filter(name -> name.length() > 3).count();
+        System.out.println("names  that are longer than 3 characters: " + count);
+    }
+}
